@@ -44,7 +44,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  AppInfo _appInfo;
+  late AppInfo _appInfo;
   List<AppMarketInfo> _appMarketList = [];
   String _installMarkets = '';
 
@@ -114,9 +114,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text('packageName:${_appInfo?.packageName}'),
-        Text('versionName:${_appInfo?.versionName}'),
-        Text('versionCode:${_appInfo?.versionCode}'),
+        Text('packageName:${_appInfo.packageName}'),
+        Text('versionName:${_appInfo.versionName}'),
+        Text('versionCode:${_appInfo.versionCode}'),
         Text('安装的应用商店:$_installMarkets'),
       ],
     );

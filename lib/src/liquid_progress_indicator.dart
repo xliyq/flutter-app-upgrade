@@ -12,19 +12,19 @@ class LiquidLinearProgressIndicator extends ProgressIndicator {
   final double borderRadius;
 
   ///The widget to show in the center of the progress indicator.
-  final Widget center;
+  final Widget? center;
 
   ///The direction the liquid travels.
   final Axis direction;
 
   LiquidLinearProgressIndicator({
-    Key key,
+    Key? key,
     double value = 0.5,
-    Color backgroundColor,
-    Animation<Color> valueColor,
-    this.borderWidth,
-    this.borderColor,
-    this.borderRadius,
+    Color? backgroundColor,
+    Animation<Color>? valueColor,
+    required this.borderWidth,
+    required this.borderColor,
+    this.borderRadius = 0,
     this.center,
     this.direction = Axis.horizontal,
   }) : super(
@@ -32,12 +32,7 @@ class LiquidLinearProgressIndicator extends ProgressIndicator {
           value: value,
           backgroundColor: backgroundColor,
           valueColor: valueColor,
-        ) {
-    if (borderWidth != null && borderColor == null ||
-        borderColor != null && borderWidth == null) {
-      throw ArgumentError("borderWidth and borderColor should both be set.");
-    }
-  }
+        );
 
   Color _getBackgroundColor(BuildContext context) =>
       backgroundColor ?? Color(0x0000BFFF); //Theme.of(context).backgroundColor;
@@ -70,7 +65,7 @@ class _LiquidLinearProgressIndicatorState
         child: Stack(
           children: <Widget>[
             Wave(
-              value: widget.value,
+              value: widget.value!,
               color: widget._getValueColor(context),
               direction: widget.direction,
             ),
@@ -86,7 +81,7 @@ class _LinearPainter extends CustomPainter {
   final Color color;
   final double radius;
 
-  _LinearPainter({@required this.color, @required this.radius});
+  _LinearPainter({required this.color, required this.radius});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -109,14 +104,14 @@ class _LinearBorderPainter extends CustomPainter {
   final double radius;
 
   _LinearBorderPainter({
-    @required this.color,
-    @required this.width,
-    @required this.radius,
+    required this.color,
+    required this.width,
+    required this.radius,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (color == null || width == null) {
+    if (width == null) {
       return;
     }
 
@@ -144,7 +139,7 @@ class _LinearBorderPainter extends CustomPainter {
 class _LinearClipper extends CustomClipper<Path> {
   final double radius;
 
-  _LinearClipper({@required this.radius});
+  _LinearClipper({required this.radius});
 
   @override
   Path getClip(Size size) {
